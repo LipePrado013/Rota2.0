@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <>
-      <StatusBar style={'light'} />
+      <StatusBar style="light" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* HEARDER */}
         <View style={{
@@ -46,7 +46,7 @@ export default function Home() {
             fontSize: 25,
             fontWeight: 'bold',
             color: '#fff'
-          }}> Olá, user</Text>
+          }}> Olá, Usuário</Text>
           <TouchableOpacity style={{
             padding: 5,
             display: 'flex',

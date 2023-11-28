@@ -7,13 +7,46 @@ export default function Cadastro() {
   const navigation = useNavigation()
 
 
-  const [nome, setNome] = useState()
-  const [SobreNome, setSobreNome] = useState()
-  const [Cidade, setCidade] = useState()
-  const [email, setEmail] = useState()
-  const [senha, setSenha] = useState()
-  const [ConfirmaSenha, setConfirmaSenha] = useState()
+  const [nome, setNome] = useState('')
+  const [sobreNome, setSobreNome] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+  const [confirmaSenha, setConfirmaSenha] = useState('')
 
+  // const [formis, setFormis] = useState({
+  //   nome: '',
+  //   sobreNome: '',
+  //   cidade: '',
+  //   email: '',
+  //   senha: '',
+  //   ConfirmaSenha: ''
+  // })
+
+
+  function data() {
+    fetch('http://192.168.15.13:80/API-Rota/cadUsers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nome: nome,
+        sobreNome: sobreNome,
+        cidade: cidade,
+        email: email,
+        senha: senha,
+        confirmaSenha: confirmaSenha,
+      })
+    }).then(res => res.json()).then(console.log(
+      nome,
+      sobreNome,
+      cidade,
+      email,
+      senha,
+      confirmaSenha
+    ))
+  }
 
 
   return (
@@ -56,7 +89,7 @@ export default function Cadastro() {
           backgroundColor: '#F59230',
           borderRadius: 10,
           borderWidth: 0,
-        }} onPress={() => navigation.navigate('login')}>
+        }} onPress={data}>
           <Text style={{
             fontSize: 17,
             color: "#fff",

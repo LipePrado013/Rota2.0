@@ -32,8 +32,8 @@ export default function Login() {
   }, []);
   // api
 
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   // console.log(email)
 
   function login() {
@@ -43,6 +43,7 @@ export default function Login() {
     if (user) {
       // Se login bem sucedido, direciona para a página "Home"
       navigation.navigate('main', { screen: 'home', user });
+
     } else {
       //Se login estiver errado dará erro
       console.log('Email ou senha inválidos');
