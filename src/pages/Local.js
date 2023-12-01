@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, } from 're
 import { useEffect, useState } from "react";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import ImagemModal from '../components/ImagemModal';
 
 export default function Local() {
   const navigation = useNavigation()
@@ -13,89 +14,34 @@ export default function Local() {
   const local = route.params.local
 
   console.log(local)
+
+
   const [heart, setHeart] = useState(true);
   const [foto, setFoto] = useState([]);
 
+  // // modal
+  const [modalAberto, setModalAberto] = useState(false);
+  const [imagemSelecionada, setImagemSelecionada] = useState('');
+
+  const abrirModal = (imagem) => {
+    setImagemSelecionada(imagem);
+    setModalAberto(true);
+  };
+
+  const fecharModal = () => {
+    setImagemSelecionada('');
+    setModalAberto(false);
+  };
 
   return (
     <>
       <StatusBar style="dark" />
-      {foto ? (null) : (
-        <>
-          <TouchableOpacity style={{
-            position: 'absolute',
-            top: 40,
-            zIndex: 20,
-            right: 20
-          }} onPress={() => setFoto(!foto)}>
-            <AntDesign name="closecircle" size={30} color="#FFF" />
-          </TouchableOpacity>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              paddingTop: 270,
-              backgroundColor: '#0000009e',
-              width: '100%',
-              height: '100%',
-            }} >
-
-            {local.img_local1 ? (<View key={local.id_local} style={{
-              margin: 10,
-              borderRadius: 20,
-              gap: 20,
-            }} >
-              <Image source={{ uri: local.img_local1 }} style={{
-                width: 350,
-                height: 350
-              }} />
-
-            </View>) : null}
-            {local.img_local2 ? (<View style={{
-              margin: 10,
-              borderRadius: 20,
-              gap: 20,
-            }} >
-
-              <Image source={{ uri: local.img_local2 }} style={{
-                width: 350,
-                height: 350
-              }} />
-
-            </View>) : null}
-            {local.img_local3 ? (<View style={{
-              margin: 10,
-              borderRadius: 20,
-              gap: 20,
-            }} >
-
-              <Image source={{ uri: local.img_local3 }} style={{
-                width: 350,
-                height: 350
-              }} />
-            </View>) : null}
-
-            {local.img_local4 ? (<View style={{
-              margin: 10,
-              borderRadius: 20,
-              gap: 20,
-            }} >
-
-              <Image source={{ uri: local.img_local4 }} style={{
-                width: 350,
-                height: 350
-              }} />
-            </View>) : null}
-
-          </ScrollView>
-        </>
-      )}
       <ScrollView showsVerticalScrollIndicator={false} style={{
         paddingTop: 12,
-        // backgroundColor: '#303030',
       }}>
-
+        {modalAberto && (
+          <ImagemModal imagem={imagemSelecionada} fecharModal={fecharModal} />
+        )}
         <View style={{
           backgroundColor: '#fff',
           borderRadius: 8,
@@ -183,7 +129,8 @@ export default function Local() {
                   flexDirection: 'row',
                   gap: 20,
                 }}
-                  onPress={() => setFoto(!foto)}>
+                  onPress={() => abrirModal(local.img_local1)}
+                >
                   <Image source={{ uri: local.img_local1 }} style={{
                     width: 100,
                     height: 100
@@ -197,11 +144,13 @@ export default function Local() {
                   overflow: 'hidden',
                   flexDirection: 'row',
                   gap: 20,
-                }} onPress={() => setFoto(!foto)}>
-                  <Image source={{ uri: local.img_local2 }} style={{
-                    width: 100,
-                    height: 100
-                  }} />
+                }} onPress={() => abrirModal(local.img_local2)}
+                >
+                  <Image source={{ uri: local.img_local2 }}
+                    style={{
+                      width: 100,
+                      height: 100
+                    }} />
                 </TouchableOpacity> : null}
 
               {local.img_local3 != '' ?
@@ -211,7 +160,7 @@ export default function Local() {
                   overflow: 'hidden',
                   flexDirection: 'row',
                   gap: 20,
-                }} onPress={() => setFoto(!foto)}>
+                }} onPress={() => abrirModal(local.img_local3)}>
                   <Image source={{ uri: local.img_local3 }} style={{
                     width: 100,
                     height: 100
@@ -226,7 +175,7 @@ export default function Local() {
                   overflow: 'hidden',
                   flexDirection: 'row',
                   gap: 20,
-                }} onPress={() => setFoto(!foto)}>
+                }} onPress={() => abrirModal(local.img_local4)}>
                   <Image source={{ uri: local.img_local4 }} style={{
                     width: 100,
                     height: 100

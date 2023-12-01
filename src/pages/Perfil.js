@@ -6,10 +6,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Perfil() {
 
-  const route = useRoute()
+  // const route = useRoute()
   const navigation = useNavigation()
 
-  console.log(route)
+  // const user = route.params
+  // console.log(user.nm_user)
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -60,13 +61,13 @@ export default function Perfil() {
             alignItems: 'center',
           }}>
             <Text style={{ color: '#FFF', fontSize: 20 }}>
-              Calebe Alves
+              Nome: {/*  {user.nome} {user.sobrenome} */}
             </Text>
             <Text style={{ color: '#6E6E6E' }}>
-              cidade: São Paulo
+              cidade:{/*  {user.cidade} */}
             </Text>
             <Text style={{ color: '#6E6E6E' }}>
-              E-mail: CalebeDacunha@gmail.com
+              E-mail:{/*  {user.email} */}
             </Text>
           </View>
         </View>

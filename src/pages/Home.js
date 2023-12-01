@@ -7,14 +7,17 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Home() {
   const navigation = useNavigation()
+  // const route = useRoute()
 
+  // const users = route.params
+  // console.log(users)
 
   const [recomendados, setRecomendado] = useState([]);
   const [evento, setEvento] = useState([]);
   const [maisLocais, setMaisLocais] = useState([])
 
   function data() {
-    fetch('http://192.168.15.13:80/API-Rota/') //mudar o ip da maquina para que a API funcione 
+    fetch('http://192.168.15.14:80/API-Rota/') //mudar o ip da maquina para que a API funcione 
       .then((Response) => Response.json())
       .then(json => {
         setMaisLocais(json);
@@ -46,7 +49,7 @@ export default function Home() {
             fontSize: 25,
             fontWeight: 'bold',
             color: '#fff'
-          }}> Olá, Usuário</Text>
+          }}> Olá, </Text>
           <TouchableOpacity style={{
             padding: 5,
             display: 'flex',

@@ -21,7 +21,7 @@ export default function MapGeral() {
   // const [destaques, setDestaques] = useState([]);
 
   function data() {
-    fetch('http://192.168.15.13:80/API-Rota/') //mudar o ip da maquina para que a API funcione 
+    fetch('http://192.168.15.14:80/API-Rota/') //mudar o ip da maquina para que a API funcione 
       .then((Response) => Response.json())
       .then(json => {
         setLocais(json) //aqui ele vai pegar o indece(0, 2)é quantos eu quero que ele pegue.
