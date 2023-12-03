@@ -65,6 +65,7 @@ export default function Local() {
             <TouchableOpacity style={{
               padding: 5,
             }}
+
               onPress={() => navigation.goBack()}>
               <AntDesign name="caretleft" size={30} color="#F59230" />
             </TouchableOpacity>
