@@ -17,7 +17,7 @@ export default function Local() {
 
 
   const [heart, setHeart] = useState(true);
-  const [foto, setFoto] = useState([]);
+
 
   // // modal
   const [modalAberto, setModalAberto] = useState(false);

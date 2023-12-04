@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Cadastro = () => {
-  const navigation = useNavigation()
-  const [senhaValidar, setSenhaValidar] = useState('');
+  const navigation = useNavigation();
+  const [cadastrado, setCadastrado] = useState(false);
+  const [campos, setCampos] = useState(false);
+  const [senhaValidar, setSenhaValidar] = useState(false);
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -14,8 +16,23 @@ const Cadastro = () => {
   const [confirmaSenha, setConfirmaSenha] = useState('');
 
   const cadastrarUsuario = async () => {
+    // Verifica se algum campo está vazio
+    if (
+      nome === '' ||
+      sobrenome === '' ||
+      cidade === '' ||
+      email === '' ||
+      senha === '' ||
+      confirmaSenha === ''
+    ) {
+      setCampos(true);
+      setTimeout(() => setCampos(false), 2000);
+      // alert('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    // Verifica se as senhas coincidem
     if (senha !== confirmaSenha) {
-      // alert('As senhas não coincidem.');
       setSenhaValidar(true);
       setTimeout(() => setSenhaValidar(false), 2000);
       return;
@@ -24,6 +41,7 @@ const Cadastro = () => {
     const data = {
       nome: nome,
       sobrenome: sobrenome,
+      cidade: cidade,
       email: email,
       senha: senha,
       csenha: confirmaSenha,
@@ -34,34 +52,29 @@ const Cadastro = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          "Accept": "application/json"
         },
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        alert('Usuário cadastrado com sucesso!');
-        setNome('')
-        setSobrenome('')
-        setEmail('')
-        setSenha('')
-        setConfirmaSenha('')
+        setCadastrado(true);
+        setTimeout(() => setCadastrado(false), 2000);
 
+        setNome('');
+        setSobrenome('');
+        setCidade('');
+        setEmail('');
+        setSenha('');
+        setConfirmaSenha('');
       } else {
-        const errorResponse = await response.json();
-        alert(`Erro ao cadastrar usuário: ${errorResponse.message}`);
-        setNome('')
-        setSobrenome('')
-        setEmail('')
-        setSenha('')
-        setConfirmaSenha('')
+        const errorResponse = await response.text();
+        console.error(errorResponse);
+        // Trate o erro de acordo com a sua lógica
       }
     } catch (error) {
       alert('Erro ao realizar a requisição. Verifique sua conexão.');
-      setNome('')
-      setSobrenome('')
-      setEmail('')
-      setSenha('')
-      setConfirmaSenha('')
+      console.error(error);
     }
   };
 
@@ -69,6 +82,44 @@ const Cadastro = () => {
 
     <View style={styles.container}>
 
+      {campos && (
+        <View style={{
+          zIndex: 200,
+          // borderWidth: 1,
+          width: 220,
+          alignItems: 'center',
+          padding: 3,
+          backgroundColor: '#E7FF64',
+          position: 'absolute',
+          top: 200,
+          borderRadius: 20
+
+        }}>
+          <Text style={{
+            color: '#000',
+            fontSize: 20,
+          }}>Por favor, preencha todos os campos.</Text>
+        </View>
+      )}
+      {cadastrado && (
+        <View style={{
+          zIndex: 200,
+          // borderWidth: 1,
+          width: 220,
+          alignItems: 'center',
+          padding: 3,
+          backgroundColor: '#64FC62',
+          position: 'absolute',
+          top: 200,
+          borderRadius: 20
+
+        }}>
+          <Text style={{
+            color: '#000',
+            fontSize: 20,
+          }}>cadasrtrado com sucesso</Text>
+        </View>
+      )}
       {senhaValidar && (
         <View style={{
           zIndex: 200,
@@ -88,6 +139,8 @@ const Cadastro = () => {
           }}>As senhas não coincidem</Text>
         </View>
       )}
+
+      
       <TextInput
         style={styles.input}
         placeholder="Nome"
@@ -105,6 +158,7 @@ const Cadastro = () => {
         placeholder="Cidade"
         onChangeText={(value) => setCidade(value)}
         value={cidade}
+
       />
       <TextInput
         style={styles.input}
