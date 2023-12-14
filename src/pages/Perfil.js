@@ -3,6 +3,8 @@ import { Text, ScrollView, View, TouchableOpacity, Image, FlatList } from "react
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import perfil from '../assets/img/perfil.png'
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import apiURL from "../config/api";
 
 export default function Perfil() {
 
@@ -11,6 +13,22 @@ export default function Perfil() {
 
   // const user = route.params
   // console.log(user.nm_user)
+
+  const [recomendados, setRecomendado] = useState([]);
+
+
+  function data(){
+    fetch(`${apiURL}`)
+      .then((response) => response.json())
+      .then((json) => {
+        setRecomendado(json.splice(0, 3));
+      })
+      .catch((err) => console.error(err));
+  }
+  
+  useEffect(() => {
+    data()
+  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -48,26 +66,28 @@ export default function Perfil() {
             alignItems: 'center',
             gap: 5
           }}>
-          <Image source={perfil} style={{
-            borderWidth: 1,
-            borderColor: '#fff',
-            borderRadius: 500,
-            width: 150,
-            height: 150,
-          }} />
+          <TouchableOpacity>
+            <Image source={perfil} style={{
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 500,
+              width: 150,
+              height: 150,
+            }} />
+          </TouchableOpacity>
 
           <View style={{
             gap: 5,
             alignItems: 'center',
           }}>
             <Text style={{ color: '#FFF', fontSize: 20 }}>
-              Nome: {/*  {user.nome} {user.sobrenome} */}
+              Nome: Diego Vieira{/*  {user.nome} {user.sobrenome} */}
             </Text>
             <Text style={{ color: '#6E6E6E' }}>
-              cidade:{/*  {user.cidade} */}
+              cidade: São Vicente{/*  {user.cidade} */}
             </Text>
             <Text style={{ color: '#6E6E6E' }}>
-              E-mail:{/*  {user.email} */}
+              E-mail: diego@gmail.com{/*  {user.email} */}
             </Text>
           </View>
         </View>
@@ -89,33 +109,44 @@ export default function Perfil() {
         <View style={{
           padding: 10
         }}>
-          {/* <FlatList
-            data={dataFav}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={{
-                backgroundColor: '#FFF',
-                borderRadius: 16,
-                marginVertical: 16,
-                alignItems: 'center',
-                padding: 10,
-                overflow: 'hidden',
-                width: 150,
-                height: 160
-              }} onPress={() => navigation.navigate('locais', { item: item })}>
-
-
-                <Image style={{ width: 130, height: 100, resizeMode: 'cover', borderRadius: 16, }} source={item.image} />
-
-                <Text style={{
-                  margin: 10,
-                  fontWeight: 700,
-                  fontSize: 20
-                }}>{item.titulo}</Text>
+         <View>
+         
+          {
+            recomendados.map((local) => (
+              <TouchableOpacity key={local.id_local} style={{
+                width: '100%',
+                height: 150,
+                marginTop: 10,
+              }} onPress={() => navigation.navigate('local', { local })}>
+                <Image style={{
+                  width: '100%',
+                  height: '100%'
+                }} source={{ uri: local.img_local }} />
+                <View style={{
+                  position: 'absolute',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  width: '100%',
+                  height: '100%',
+                  padding: 10,
+                  backgroundColor: '#000000ae'
+                }}>
+                  <Text style={{
+                    color: '#FFF',
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                  }}>{local.nm_local}</Text>
+                  <Text style={{
+                    color: '#FFF',
+                  }}>{local.tx_previa}</Text>
+                </View>
               </TouchableOpacity>
-            )} numColumns={2}
-            columnWrapperStyle={{
-              justifyContent: 'space-between'
-            }} /> */}
+            ))
+          }
+        </View>
+            
+              
+            
 
         </View>
 

@@ -1,0 +1,8 @@
+Locais de troca de IP
+- Cadastrar
+- Home
+- Login
+- MapGeral
+- Pesquisa
+
+Trocar no SLIM 

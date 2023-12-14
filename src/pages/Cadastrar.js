@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import apiURL from '../config/api';
 
 const Cadastro = () => {
   const navigation = useNavigation();
@@ -48,11 +49,11 @@ const Cadastro = () => {
     };
 
     try {
-      const response = await fetch('http://192.168.15.14:80/API-Rota/cadUsers', {
+      const response = await fetch(`${apiURL}/cadUsers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "Accept": "application/json"
+          // "Accept": "application/json"
         },
         body: JSON.stringify(data),
       });
@@ -69,7 +70,7 @@ const Cadastro = () => {
         setConfirmaSenha('');
       } else {
         const errorResponse = await response.text();
-        console.error(errorResponse);
+        console.error('erro aq', errorResponse);
         // Trate o erro de acordo com a sua lógica
       }
     } catch (error) {
@@ -117,7 +118,7 @@ const Cadastro = () => {
           <Text style={{
             color: '#000',
             fontSize: 20,
-          }}>cadasrtrado com sucesso</Text>
+          }}>cadastrado com sucesso</Text>
         </View>
       )}
       {senhaValidar && (
@@ -140,7 +141,7 @@ const Cadastro = () => {
         </View>
       )}
 
-      
+
       <TextInput
         style={styles.input}
         placeholder="Nome"
@@ -207,7 +208,7 @@ const Cadastro = () => {
         justifyContent: 'center',
         borderRadius: 10,
         borderWidth: 0,
-      }} onPress={() => navigation.goBack()}>
+      }} onPress={() => navigation.navigate('login')}>
         <Text style={{
           fontSize: 17,
           fontWeight: 'bold',

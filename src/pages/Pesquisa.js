@@ -8,6 +8,7 @@ import { validate } from 'react-native-web/dist/cjs/exports/StyleSheet/validate'
 // {/* pre definido apenas para a apresentação excluir dpois */}
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import apiURL from '../config/api';
 // {/* pre definido apenas para a apresentação excluir dpois */}
 
 export default function Pesquisa() {
@@ -16,7 +17,7 @@ export default function Pesquisa() {
   const [locais, setLocais] = useState([]);
 
   function data() {
-    fetch('http://192.168.15.14:80/API-Rota/') //mudar o ip da maquina para que a API funcione 
+    fetch(`${apiURL}`) //mudar o ip da maquina para que a API funcione 
       .then((Response) => Response.json())
       .then(json => setLocais(json))
       .catch(err => console.error(err))
@@ -61,7 +62,7 @@ export default function Pesquisa() {
         }}>
           {locais.filter((peq) => {
             if (pesquisa === '') {
-              return peq
+              return !peq
             }
             else if (peq.nm_local.includes(pesquisa)) {
               return peq
